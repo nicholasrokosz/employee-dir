@@ -53,7 +53,6 @@ class App extends Component {
               // value={searchTerm}
             ></input>
           </div>
-          {/* <Table striped bordered hover> */}
           <table className='table table-striped'>
             <thead>
               <tr>
@@ -85,7 +84,6 @@ class App extends Component {
               ))}
             </tbody>
           </table>
-          {/* </Table> */}
         </div>
       </>
     );
