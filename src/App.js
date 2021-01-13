@@ -27,7 +27,7 @@ class App extends Component {
     const { employees } = this.state;
     return (
       <>
-        <h1 className='text-center'>Employee Directory</h1>
+        <h1 className='text-center my-5'>Employee Directory</h1>
         <div className='container'>
           <Table striped bordered hover>
             <thead>
@@ -48,7 +48,11 @@ class App extends Component {
                 <tr>
                   <td>{`${name.last}, ${name.first}`}</td>
                   <td>
-                    <img src={picture.thumbnail} alt='employee pic'></img>
+                    <img
+                      src={picture.thumbnail}
+                      alt='employee pic'
+                      className='rounded text-center'
+                    ></img>
                   </td>
                   <td>{dob.date.slice(0, 10)}</td>
                   <td>{phone}</td>
