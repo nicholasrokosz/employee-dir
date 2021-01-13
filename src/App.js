@@ -1,17 +1,19 @@
 import { Component } from 'react';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class App extends Component {
   state = {
+    everyone: [],
     employees: [],
     sorted: false,
+    // searchTerm: '',
   };
   async componentDidMount() {
-    const data = await fetch('https://randomuser.me/api/?results=50&nat=us');
+    const data = await fetch('https://randomuser.me/api/?results=100&nat=us');
     const { results: employees } = await data.json();
-    this.setState({ employees });
+    this.setState({ employees, everyone: employees });
   }
 
   handleSort = () => {
@@ -23,13 +25,49 @@ class App extends Component {
     this.setState({ employees: newArr, sorted: !sorted });
   };
 
+  handleSearch = e => {
+    const search = e.target.value;
+    const { everyone } = this.state;
+    const newArr = everyone.filter(emp =>
+      emp.name.last.toLowerCase().includes(search)
+    );
+    this.setState({ employees: newArr });
+  };
+
+  handleInputChange = event => {
+    // Getting the value and name of the input which triggered the change
+    let value = event.target.value;
+    const name = event.target.name;
+
+    if (name === 'password') {
+      value = value.substring(0, 15);
+    }
+    // Updating the input's state
+    this.setState({
+      [name]: value,
+    });
+  };
   render() {
     const { employees } = this.state;
     return (
       <>
         <h1 className='text-center my-5'>Employee Directory</h1>
         <div className='container'>
-          <Table striped bordered hover>
+          <div className='input-group mb-3'>
+            <div className='input-group-prepend'>
+              <span className='input-group-text' id='inputGroup-sizing-default'>
+                Filter by name
+              </span>
+            </div>
+            <input
+              type='text'
+              className='form-control'
+              onChange={this.handleSearch}
+              // value={searchTerm}
+            ></input>
+          </div>
+          {/* <Table striped bordered hover> */}
+          <table className='table table-striped'>
             <thead>
               <tr>
                 <th>
@@ -59,7 +97,8 @@ class App extends Component {
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </table>
+          {/* </Table> */}
         </div>
       </>
     );
