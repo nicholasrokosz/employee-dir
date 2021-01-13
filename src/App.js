@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import Table from 'react-bootstrap/Table';
 import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,7 +7,6 @@ class App extends Component {
     everyone: [],
     employees: [],
     sorted: false,
-    // searchTerm: '',
   };
   async componentDidMount() {
     const data = await fetch('https://randomuser.me/api/?results=100&nat=us');
@@ -35,19 +33,6 @@ class App extends Component {
     this.setState({ employees: newArr });
   };
 
-  handleInputChange = event => {
-    // Getting the value and name of the input which triggered the change
-    let value = event.target.value;
-    const name = event.target.name;
-
-    if (name === 'password') {
-      value = value.substring(0, 15);
-    }
-    // Updating the input's state
-    this.setState({
-      [name]: value,
-    });
-  };
   render() {
     const { employees } = this.state;
     return (
