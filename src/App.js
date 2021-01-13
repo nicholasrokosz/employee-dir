@@ -28,9 +28,10 @@ class App extends Component {
   handleSearch = e => {
     const search = e.target.value;
     const { everyone } = this.state;
-    const newArr = everyone.filter(emp =>
-      emp.name.last.toLowerCase().includes(search)
-    );
+    const newArr = everyone.filter(({ name }) => {
+      const fullName = name.last + name.first;
+      return fullName.toLowerCase().includes(search.toLowerCase());
+    });
     this.setState({ employees: newArr });
   };
 
