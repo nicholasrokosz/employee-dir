@@ -24,12 +24,13 @@ class App extends Component {
   };
 
   handleSearch = e => {
-    const search = e.target.value;
+    const search = e.target.value.toLowerCase();
     const { everyone } = this.state;
-    const newArr = everyone.filter(({ name }) => {
-      const fullName = name.last + name.first;
-      return fullName.toLowerCase().includes(search.toLowerCase());
-    });
+    const newArr = everyone.filter(
+      ({ name }) =>
+        name.last.toLowerCase().startsWith(search) ||
+        name.first.toLowerCase().startsWith(search)
+    );
     this.setState({ employees: newArr });
   };
 
