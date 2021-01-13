@@ -1,49 +1,62 @@
+import { Component } from 'react';
 import Table from 'react-bootstrap/Table';
+import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class App extends React.Component {
+class App extends Component {
   state = {
     employees: [],
+    sorted: false,
   };
-
   async componentDidMount() {
-    const data = await fetch('https://randomuser.me/api/?results=200&nat=us');
+    const data = await fetch('https://randomuser.me/api/?results=50&nat=us');
     const { results: employees } = await data.json();
     this.setState({ employees });
   }
+
+  handleSort = () => {
+    const { employees, sorted } = this.state;
+    let newArr;
+    if (!sorted)
+      newArr = employees.sort((a, b) => (a.name.last > b.name.last ? 1 : -1));
+    else newArr = employees.reverse();
+    this.setState({ employees: newArr, sorted: !sorted });
+  };
 
   render() {
     const { employees } = this.state;
     return (
       <>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan='2'>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
+        <h1 className='text-center'>Employee Directory</h1>
+        <div className='container'>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>
+                  <button className='btn' onClick={this.handleSort}>
+                    <FontAwesomeIcon icon={faArrowsAltV} />
+                  </button>
+                  Name
+                </th>
+                <th>Picture</th>
+                <th>DOB</th>
+                <th>Phone #</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map(({ name, picture, dob, phone }) => (
+                <tr>
+                  <td>{`${name.last}, ${name.first}`}</td>
+                  <td>
+                    <img src={picture.thumbnail} alt='employee pic'></img>
+                  </td>
+                  <td>{dob.date.slice(0, 10)}</td>
+                  <td>{phone}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       </>
     );
   }
