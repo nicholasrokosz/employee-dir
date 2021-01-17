@@ -1,5 +1,5 @@
 # Employee Directory
 
-This README is a WIP.
+This is a React SPA that uses randomuser.me to populate a table of employees. Users can sort by name to alphabetical or reverse alphabetical order. Aditionally, users can search the directory by either first or last name.
 
-Site is fully functional but needs refactoring. View at [https://nicks-employee-directory.netlify.app/](https://nicks-employee-directory.netlify.app/).
+View at [https://nicks-employee-directory.netlify.app/](https://nicks-employee-directory.netlify.app/).
